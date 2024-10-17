@@ -2,16 +2,19 @@
   "name": "bitcode-backend-task",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "api/webhook.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-      "start": "node server.js",
-  "dev": "nodemon server.js"
+    "dev": "vercel dev",
+    "build": "echo 'No build step needed'",
+    "start": "vercel start"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.27.2",
+    "dotenv": "^10.0.0",
     "express": "^4.21.1"
   },
   "devDependencies": {
