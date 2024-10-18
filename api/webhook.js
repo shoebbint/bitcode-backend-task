@@ -2,7 +2,6 @@
 const express = require('express');
 const app = express();
 require('dotenv').config();
-const port = process.env.PORT || 3000;
 
 // Middleware to parse incoming JSON data
 app.use(express.json());
@@ -19,10 +18,5 @@ app.post('/webhook', (req, res) => {
   res.status(200).send('Webhook received successfully');
 });
 
-// Start the server
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
-
-// Export the app as a serverless function (if needed)
+// Export the app as a serverless function for Vercel
 module.exports = app;
