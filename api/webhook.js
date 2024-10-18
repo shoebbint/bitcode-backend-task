@@ -2,11 +2,12 @@
 const express = require('express');
 const app = express();
 const crypto = require('crypto');
+require('dotenv').config();
 const port = process.env.PORT || 3000;
 const webhookSecret = process.env.WEBHOOK_SECRET;
 const formBuilderApiKey = process.env.FORMBUILDER_API_KEY;
 
-require('dotenv').config();
+
 
 // Middleware to parse incoming JSON data
 app.use(express.json());
@@ -18,7 +19,7 @@ app.post('/', (req, res) => {
   const formData = req.body;
   const receivedSecret = req.headers['x-webhook-secret']; // Assuming the secret is sent in a custom header
 
-  const expectedSecret = 'your_generated_secret_key'; // The secret key you configured
+  const expectedSecret = webhookSecret; // The secret key you configured
 
   // Verify the secret
   if (receivedSecret !== expectedSecret) {
