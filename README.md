@@ -56,9 +56,11 @@ The goal was to create a system where:
 3. **In the root directory, create a .env file and add your 123FormBuilder API token**:
       FORMBUILDER_JWT_TOKEN=your_api_key_here
 4. **Run the server and expose your server**
-node index.js
-ngrok http 5000
-5.**Setup the webhooks in forms.app** 
-Navigate to your form's integration settings in forms.app.
-Enter the Ngrok public URL followed by /api/webhook (e.g., https://your-ngrok-subdomain.ngrok.io/api/webhook).
-Save the settings.
+   ```bash
+         node index.js
+         ngrok http 5000
+
+5. **Setup the webhooks in forms.app** 
+      Navigate to your form's integration settings in forms.app.
+      Enter the Ngrok public URL followed by /api/webhook (e.g., https://your-ngrok-subdomain.ngrok.io/api/webhook).
+      Save the settings.
