@@ -4,8 +4,11 @@ const axios = require("axios");
 const app = express();
 const port = process.env.PORT || 5000;
 require("dotenv").config();
+
 app.use(cors());
 app.use(express.json());
+
+const formDataList = []; // Initialize an array to store form data
 
 async function createForm(formName, formActive) {
   try {
@@ -30,15 +33,11 @@ async function createForm(formName, formActive) {
 
     console.log("Form created:", response.data);
     return response.data;
-  } 
-  catch (error) {
+  } catch (error) {
     console.error(
       "Error creating form:",
       error.response?.data || error.message
     );
-    if (error.response) {
-      console.error("Error details:", error.response.data);
-    }
     throw error;
   }
 }
@@ -58,6 +57,7 @@ app.post("/api/webhook", async (req, res) => {
 
   try {
     const createdForm = await createForm(formName, formActive);
+    formDataList.push({ formName, formActive, createdForm });
     res.status(200).json({
       message: "Webhook received and form created successfully",
       form: createdForm,
@@ -76,4 +76,5 @@ if (require.main === module) {
     console.log(`Server is running on port ${port}`);
   });
 }
+
 module.exports = app;
