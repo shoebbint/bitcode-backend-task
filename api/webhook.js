@@ -42,6 +42,29 @@ async function createForm(formName, formActive) {
   }
 }
 
+async function getForms() {
+  try {
+    const formBuilderApiKey = process.env.FORMBUILDER_JWT_TOKEN;
+    const formListUrl = "https://api.123formbuilder.com/v2/forms";
+
+    const response = await axios.get(formListUrl, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${formBuilderApiKey}`,
+      },
+      params: {
+        per_page: 10,
+        page: 1,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching forms:", error.response?.data || error.message);
+    throw error;
+  }
+}
+
 app.post("/api/webhook", async (req, res) => {
   const formData = req.body;
 
@@ -69,6 +92,15 @@ app.post("/api/webhook", async (req, res) => {
 
 app.get("/api/data", (req, res) => {
   res.status(200).json(formDataList);
+});
+
+app.get("/api/forms", async (req, res) => {
+  try {
+    const forms = await getForms();
+    res.status(200).json(forms);
+  } catch (error) {
+    res.status(500).send("Failed to fetch forms from 123FormBuilder");
+  }
 });
 
 if (require.main === module) {
